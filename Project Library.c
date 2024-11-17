@@ -11,8 +11,8 @@ char temp_choice[20];
 // Functions
 void menu();
 void verification();
-void user_data();
-void admin_data();
+void user_panel();
+void admin_panel();
 void add_book();
 void edit_book();
 void book_list();
@@ -42,7 +42,7 @@ int main() {
         scanf("%d", &choice);
         switch (choice) {
             case 1:
-                user_data();
+                user_panel();
                 break;
             case 2:
                 verification();
@@ -76,14 +76,14 @@ void menu() {
 }
 
 // User menu
-void user_data() {
+void user_panel() {
     clear_screen();
     decor();
     printf("\n\n\n | USER PANEL |\n\n");
     printf("\n [ 1 ] >> BOOK LIST\n");
     printf("\n [ 2 ] >> SEARCH\n");
     printf("\n [ 3 ] >> RETURN TO MENU\n");
-    printf("\n Choose your option: ");
+    printf("\n Choose your Option: ");
     scanf("%d", &choice);
     switch (choice) {
         case 1:
@@ -93,7 +93,7 @@ void user_data() {
             search();
             break;
         case 3:
-            main();
+            return_to_menu();
             break;
         default:
             printf("\nInvalid Choice\n");
@@ -111,14 +111,14 @@ void verification() {
     scanf("%d", &user_pwd);
     if (user_pwd == default_pwd) {
         printf("\n ACCESS GRANTED\n");
-        admin_data();
+        admin_panel();
     } else {
         printf("\n ACCESS DENIED!\n");
     }
 }
 
 // Admin panel
-void admin_data() {
+void admin_panel() {
     clear_screen();
     decor();
     printf("\n\n\n | ADMIN PANEL |\n");
@@ -275,7 +275,6 @@ void search() {
     int found = 0;
     while (fread(&book, sizeof(book), 1, fp)) {
         if (strstr(book.book_name, temp_choice) != NULL || strstr(book.author, temp_choice) != NULL) {
-//            printf("Found: %s | %s | %s\n", book.book_name, book.author, book.book_code);
             printf(" Book Name           | Author              | Book Code  \n");
             printf(" --------------------| --------------------| ---------  \n");
             printf(" %-20s| %-20s| %-4s\n", book.book_name, book.author, book.book_code);
